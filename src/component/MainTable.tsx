@@ -21,20 +21,26 @@ export const MainTable = ({ valueArr }: TableProps) => {
   const [increase, setIncrease] = useState<number[]>([]);
 
   useEffect(() => {
-    //   if (valueArr.length < 2) setIncrease([0]);
+    if (valueArr.length < 2) setIncrease([0]);
     if (valueArr.length < 2) return setDiffSum([0]);
 
     const differenceTotal =
       valueArr[valueArr.length - 1].sum - valueArr[valueArr.length - 2].sum;
 
-    const increaseAmountProcent = +(
-      (valueArr[valueArr.length - 1].sum / valueArr[valueArr.length - 2].sum -
-        1) *
-      100
-    ).toFixed(2);
+    const spendingProcent =
+      +(
+        (valueArr[valueArr.length - 2].sum +
+          10000 -
+          valueArr[valueArr.length - 1].sum) /
+        10000
+      ) * 100;
+    // kraen procent na potrosuvacka - tolku si potrosil
+
+    const savesProcent = +(100 - spendingProcent).toFixed(2);
+    // tolku posto si zastedil
 
     setDiffSum((prev) => [...prev, differenceTotal]);
-    setIncrease((prev) => [...prev, increaseAmountProcent]);
+    setIncrease((prev) => [...prev, savesProcent]);
   }, [valueArr.length, valueArr]);
 
   useEffect(() => {
@@ -55,7 +61,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
             <th>Date</th>
             <th>Sum</th>
             <th>Difference</th>
-            <th>+ / - %</th>
+            <th>Savings</th>
           </tr>
         </thead>
 
