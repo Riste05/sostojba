@@ -18,14 +18,24 @@ export const MainTable = ({ valueArr }: TableProps) => {
       ? JSON.parse(localStorage.getItem("totalAmount")!)
       : 0
   );
-  const [increase, setIncrease] = useState<number[]>([]);
+  const [increase, setIncrease] = useState<number[]>(
+    localStorage.getItem("increase")
+      ? JSON.parse(localStorage.getItem("increase")!)
+      : []
+  );
+  console.log(diffSum);
 
   useEffect(() => {
-    if (valueArr.length < 2) setIncrease([0]);
-    if (valueArr.length < 2) return setDiffSum([0]);
+    // if (valueArr.length < 2) setIncrease([0]);
+    if (valueArr.length < 2) {
+      return setDiffSum([]);
+    } else {
+      const differenceTotal = valueArr
+        .slice(1)
+        .map((ele, i) => ele.sum - valueArr[i].sum);
 
-    const differenceTotal =
-      valueArr[valueArr.length - 1].sum - valueArr[valueArr.length - 2].sum;
+      setDiffSum(differenceTotal);
+    }
 
     const spendingProcent =
       +(
@@ -39,8 +49,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
     const savesProcent = +(100 - spendingProcent).toFixed(2);
     // tolku posto si zastedil
 
-    setDiffSum((prev) => [...prev, differenceTotal]);
-    setIncrease((prev) => [...prev, savesProcent]);
+    // setIncrease((prev) => [...prev, savesProcent]);
   }, [valueArr.length, valueArr]);
 
   useEffect(() => {
@@ -49,7 +58,8 @@ export const MainTable = ({ valueArr }: TableProps) => {
 
     localStorage.setItem("diffSum", JSON.stringify(diffSum));
     localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
-  }, [diffSum, totalAmount]);
+    localStorage.setItem("increase", JSON.stringify(increase));
+  }, [diffSum, totalAmount, increase]);
 
   return (
     <>
@@ -70,8 +80,8 @@ export const MainTable = ({ valueArr }: TableProps) => {
             <tr key={index}>
               <td>{value.date[index]}</td>
               <td>{value.sum}</td>
-              <td>{diffSum[index]}</td>
-              <td>{increase[index]} %</td>
+              <td>{diffSum[index - 1]}</td>
+              <td>{increase[index - 1]} %</td>
             </tr>
           ))}
         </tbody>
