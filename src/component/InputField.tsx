@@ -49,9 +49,9 @@ export const InputField = () => {
     setValueArr([...valueArr, value]);
   }
 
-  useEffect(() => {
-    localStorage.setItem("valueArr", JSON.stringify(valueArr));
-  }, [valueArr]);
+  // useEffect(() => {
+  //   localStorage.setItem("valueArr", JSON.stringify(valueArr));
+  // }, [valueArr]);
 
   return (
     <>

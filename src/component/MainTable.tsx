@@ -23,10 +23,8 @@ export const MainTable = ({ valueArr }: TableProps) => {
       ? JSON.parse(localStorage.getItem("increase")!)
       : []
   );
-  console.log(diffSum);
 
   useEffect(() => {
-    // if (valueArr.length < 2) setIncrease([0]);
     if (valueArr.length < 2) {
       return setDiffSum([]);
     } else {
@@ -36,20 +34,31 @@ export const MainTable = ({ valueArr }: TableProps) => {
 
       setDiffSum(differenceTotal);
     }
+    // if (valueArr.length < 2) return setIncrease([0]);
 
-    const spendingProcent =
-      +(
-        (valueArr[valueArr.length - 2].sum +
-          10000 -
-          valueArr[valueArr.length - 1].sum) /
-        10000
-      ) * 100;
+    // const spendingProcent = valueArr.slice(-1).map((ele, i) => {
+    //   return ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100;
+    // });
+
     // kraen procent na potrosuvacka - tolku si potrosil
 
-    const savesProcent = +(100 - spendingProcent).toFixed(2);
+    // const savesProcent = +(100 - spendingProcent).toFixed(2);
     // tolku posto si zastedil
+  }, [valueArr.length, valueArr]);
 
-    // setIncrease((prev) => [...prev, savesProcent]);
+  useEffect(() => {
+    if (valueArr.length < 2) {
+      return setIncrease([]);
+    }
+
+    // kraen procent na potrosuvacka - tolku si potrosil
+    const spendingProcent = valueArr
+      .slice(1)
+      .map((ele, i) => ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100);
+
+    setIncrease(spendingProcent);
+    // tolku posto si zastedil
+    // const savesProcent = 100 - spendingProcent;
   }, [valueArr.length, valueArr]);
 
   useEffect(() => {
