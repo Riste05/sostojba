@@ -18,12 +18,17 @@ export const MainTable = ({ valueArr }: TableProps) => {
       ? JSON.parse(localStorage.getItem("totalAmount")!)
       : 0
   );
-  const [increase, setIncrease] = useState<number[]>(
-    localStorage.getItem("increase")
-      ? JSON.parse(localStorage.getItem("increase")!)
+  const [saves, setSaves] = useState<number[]>(
+    localStorage.getItem("saves")
+      ? JSON.parse(localStorage.getItem("saves")!)
       : []
   );
 
+  const [spend, setSpend] = useState<number[]>(
+    localStorage.getItem("spend")
+      ? JSON.parse(localStorage.getItem("spend")!)
+      : []
+  );
   useEffect(() => {
     if (valueArr.length < 2) {
       return setDiffSum([]);
@@ -34,32 +39,23 @@ export const MainTable = ({ valueArr }: TableProps) => {
 
       setDiffSum(differenceTotal);
     }
-    // if (valueArr.length < 2) return setIncrease([0]);
-
-    // const spendingProcent = valueArr.slice(-1).map((ele, i) => {
-    //   return ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100;
-    // });
-
-    // kraen procent na potrosuvacka - tolku si potrosil
-
-    // const savesProcent = +(100 - spendingProcent).toFixed(2);
-    // tolku posto si zastedil
   }, [valueArr.length, valueArr]);
 
   useEffect(() => {
     if (valueArr.length < 2) {
-      return setIncrease([]);
+      return setSpend([]);
+    } else {
+      // kraen procent na potrosuvacka - tolku si potrosil
+      const spendingProcent = valueArr
+        .slice(1)
+        .map((ele, i) => ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100);
+      setSpend(spendingProcent);
     }
 
-    // kraen procent na potrosuvacka - tolku si potrosil
-    const spendingProcent = valueArr
-      .slice(1)
-      .map((ele, i) => ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100);
-
-    setIncrease(spendingProcent);
     // tolku posto si zastedil
-    // const savesProcent = 100 - spendingProcent;
-  }, [valueArr.length, valueArr]);
+    const savesProcent = spend.map((ele) => 100 - ele);
+    setSaves(savesProcent);
+  }, [valueArr.length, valueArr, spend]);
 
   useEffect(() => {
     const totalDifference = diffSum.reduce((acc, curr) => acc + curr, 0);
@@ -67,8 +63,9 @@ export const MainTable = ({ valueArr }: TableProps) => {
 
     localStorage.setItem("diffSum", JSON.stringify(diffSum));
     localStorage.setItem("totalAmount", JSON.stringify(totalAmount));
-    localStorage.setItem("increase", JSON.stringify(increase));
-  }, [diffSum, totalAmount, increase]);
+    localStorage.setItem("saves", JSON.stringify(saves));
+    localStorage.setItem("spend", JSON.stringify(spend));
+  }, [diffSum, totalAmount, saves, spend]);
 
   return (
     <>
@@ -90,7 +87,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
               <td>{value.date[index]}</td>
               <td>{value.sum}</td>
               <td>{diffSum[index - 1]}</td>
-              <td>{increase[index - 1]} %</td>
+              <td>{saves[index - 1]} %</td>
             </tr>
           ))}
         </tbody>
