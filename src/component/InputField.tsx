@@ -6,26 +6,26 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export type ArrProps = {
   sum: number;
-  date: string[];
 }[];
+
+export const newDate = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 export const InputField = () => {
   const [value, setValue] = useState({
     sum: 0,
-    date: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
   });
 
   const [valueArr, setValueArr] = useState<ArrProps>(

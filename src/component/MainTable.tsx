@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Chart } from "./Chart";
 
 type TableProps = {
   valueArr: {
     sum: number;
-    date: string[];
   }[];
 };
+
+import { newDate } from "./InputField";
 
 export const MainTable = ({ valueArr }: TableProps) => {
   const [diffSum, setDiffSum] = useState<number[]>(
@@ -51,11 +53,13 @@ export const MainTable = ({ valueArr }: TableProps) => {
         .map((ele, i) => ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100);
       setSpend(spendingProcent);
     }
+  }, [valueArr.length, valueArr]);
 
+  useEffect(() => {
     // tolku posto si zastedil
     const savesProcent = spend.map((ele) => 100 - ele);
     setSaves(savesProcent);
-  }, [valueArr.length, valueArr, spend]);
+  }, [spend]);
 
   useEffect(() => {
     const totalDifference = diffSum.reduce((acc, curr) => acc + curr, 0);
@@ -84,7 +88,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
         <tbody>
           {valueArr.map((value, index) => (
             <tr key={index}>
-              <td>{value.date[index]}</td>
+              <td>{newDate[index]}</td>
               <td>{value.sum}</td>
               <td>{diffSum[index - 1]}</td>
               <td>{saves[index - 1]} %</td>
@@ -92,6 +96,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
           ))}
         </tbody>
       </table>
+      <Chart spend={spend} />
     </>
   );
 };
