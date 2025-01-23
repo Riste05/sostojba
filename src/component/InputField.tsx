@@ -8,6 +8,7 @@ export type ArrProps = {
   sum: number;
 }[];
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const newDate = [
   "Jan",
   "Feb",
@@ -35,9 +36,14 @@ export const InputField = () => {
   );
 
   function addValue(e: React.ChangeEvent<HTMLInputElement>) {
+    if (isNaN(Number(e.target.value))) {
+      alert("Value must be a number");
+      return;
+    }
+
     setValue((prev) => ({
       ...prev,
-      [e.target.name]: parseInt(e.target.value),
+      [e.target.name]: Number(e.target.value),
     }));
   }
 

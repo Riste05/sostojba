@@ -88,7 +88,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
         <tbody>
           {valueArr.map((value, index) => (
             <tr key={index}>
-              <td>{newDate[index]}</td>
+              <td>{newDate[index - 1]}</td>
               <td>{value.sum}</td>
               <td>{diffSum[index - 1]}</td>
               <td>{saves[index - 1]} %</td>

@@ -74,7 +74,7 @@ table {
   border-collapse: collapse;
   text-align: center;
   table-layout: fixed;
-  margin-bottom: 50px ;
+  margin-bottom: 50px;
 }
 
 thead {
@@ -119,8 +119,8 @@ ul {
 }
 
 .chart {
-  width: 100% ;
-  height: 11rem ;
+  width: 100%;
+  height: 11rem;
   padding: 5px;
   border-radius: 12px;
   background-color: #f8dfff;
@@ -138,8 +138,8 @@ ul {
 
 .chart-bar__inner {
   height: 100%;
-  width: 100%;
-  margin-bottom: 5px ;
+  width: 30px;
+  margin-bottom: 5px;
   border: 1px solid #313131;
   border-radius: 12px;
   background-color: #c3b4f3;
@@ -156,7 +156,7 @@ ul {
 }
 
 .char-bar__spending {
-  margin-bottom: 5px ;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
