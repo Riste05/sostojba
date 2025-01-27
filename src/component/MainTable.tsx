@@ -50,8 +50,13 @@ export const MainTable = ({ valueArr }: TableProps) => {
       // kraen procent na potrosuvacka - tolku si potrosil
       const spendingProcent = valueArr
         .slice(1)
-        .map((ele, i) => ((valueArr[i].sum + 10000 - ele.sum) / 10000) * 100);
-      setSpend(spendingProcent);
+        .map((ele, i) =>
+          Math.round(
+            ((valueArr[i].sum + 43000 - ele.sum) / 43000) * 100
+          ).toFixed(2)
+        );
+      setSpend(spendingProcent.map((ele) => parseInt(ele)));
+      console.log(spendingProcent);
     }
   }, [valueArr.length, valueArr]);
 

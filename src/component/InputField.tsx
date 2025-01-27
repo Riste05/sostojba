@@ -34,7 +34,7 @@ export const InputField = () => {
       ? JSON.parse(localStorage.getItem("valueArr")!)
       : []
   );
-
+  console.log(valueArr);
   function addValue(e: React.ChangeEvent<HTMLInputElement>) {
     if (isNaN(Number(e.target.value))) {
       alert("Value must be a number");
@@ -43,7 +43,7 @@ export const InputField = () => {
 
     setValue((prev) => ({
       ...prev,
-      [e.target.name]: Number(e.target.value),
+      [e.target.name]: parseInt(e.target.value),
     }));
   }
 
@@ -53,11 +53,13 @@ export const InputField = () => {
       return;
     }
     setValueArr([...valueArr, value]);
+
+    setValue({ sum: 0 });
   }
 
-  // useEffect(() => {
-  //   localStorage.setItem("valueArr", JSON.stringify(valueArr));
-  // }, [valueArr]);
+  useEffect(() => {
+    localStorage.setItem("valueArr", JSON.stringify(valueArr));
+  }, [valueArr]);
 
   return (
     <>
