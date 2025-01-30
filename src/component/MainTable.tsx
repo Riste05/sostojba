@@ -52,7 +52,7 @@ export const MainTable = ({ valueArr }: TableProps) => {
         .slice(1)
         .map((ele, i) =>
           Math.round(
-            ((valueArr[i].sum + 43000 - ele.sum) / 43000) * 100
+            ((valueArr[i].sum + 35000 - ele.sum) / 35000) * 100
           ).toFixed(2)
         );
       setSpend(spendingProcent.map((ele) => parseInt(ele)));
